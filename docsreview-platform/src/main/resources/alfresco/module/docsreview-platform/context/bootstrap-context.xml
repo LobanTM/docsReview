@@ -34,13 +34,14 @@
                     <prop key="mimetype">text/xml</prop>
                     
                 </props>
-                -->  
+                 
                 <props>
                     <prop key="engineId">activiti</prop>
                     <prop key="location">alfresco/module/${project.artifactId}/workflow/documentsReview1.bpmn</prop>
                     <prop key="mimetype">text/xml</prop>
                     <prop key="redeploy">false</prop>
                 </props>
+                --> 
                 <props>
                     <prop key="engineId">activiti</prop>
                     <prop key="location">alfresco/module/${project.artifactId}/workflow/dR2.bpmn</prop>

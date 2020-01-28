@@ -30,8 +30,8 @@
 	                    var assigneeUser = null;	                    
 	                    var assigneeGroup = null;
                         
-                        if ((typeof bpm_assignees != "undefined") && bpm_assignees){	    //                   
-                        	assigneeUser = bpm_assignees 											//uosw_assigneeUsers; 
+                        if ((typeof uosw_assigneeUsers != "undefined") && uosw_assigneeUsers){	    //  bpm_assignees                 
+                        	assigneeUser = uosw_assigneeUsers 											//; 
                            	//execution.setVariable('uosw_assigneeUser', assigneeUser);
 	                       	//execution.setVariable('wf_reviewerCount', assigneeUser.size());	                       	
 	                       	var i = 0;
@@ -43,8 +43,8 @@
                        	}
                        	                       	
                        	var membersByGroups = new java.util.ArrayList();
-                       	if ((typeof bpm_groupAssignees != "undefined") && bpm_groupAssignees){		//                   	
-	                       	assigneeGroup = bpm_groupAssignees; 										//uosw_assigneeGroups
+                       	if ((typeof uosw_assigneeGroups != "undefined") && uosw_assigneeGroups){		//   bpm_groupAssignees                	
+	                       	assigneeGroup = uosw_assigneeGroups; 										//
 		                    //execution.setVariable('uosw_assigneeGroup', assigneeGroup);									
                         	execution.setVariable('wf_reviewerGroupCount', assigneeGroup.size()); 
                         	
@@ -87,21 +87,22 @@
 	         				var i = 0;
 	         				do{	         	
 	         					var groupNode = people.getGroup(uosw_groupName.get(i));
-		                       				
+		                       	logger.log("-------------------- groupNode "+ i +"--- "+groupNode);			
 	         					//установка доступа для заданного пакета документов
 	         					if((typeof bpm_package != "undefined") && bpm_package){
-	         						logger.log("-------------------- "+i+" --- "+groupNode.properties["cm:authorityName"]);
+	         						logger.log("----------------name group - "+i+" --- "+groupNode.properties["cm:authorityName"]);
 	         					
 	         			 			bpm_package.children[0].setPermission("Consumer", groupNode.properties["cm:authorityName"]);		////"GROUP_ALFRESCO_ADMINISTRATORS");         			 			
 	         			 		}
 	         			 		
 		                       	//получение members для каждой группьі   
-		                       	var membersGroup = people.getMembers(groupNode);	
+		                       	var membersGroup = people.getMembers(groupNode);
+		                       	logger.log("-------------membersGroup - "+membersGroup);	
 		                       	                    		
-		                       	for(var j in membersGroup){
-		                      		logger.log("----------- "+j+"--- "+membersGroup[j].properties.userName);
+		                       	for(var j in membersGroup){		                      		
 		                      		if(membersUsers.indexOf(membersGroup[j].properties.userName)==-1){
 		                            	membersUsers.add(membersGroup[j].properties.userName);
+		                            	logger.log("----------name member- "+j+"--- "+membersGroup[j].properties.userName);
 		                            }
 		                        }
 		                        
@@ -115,7 +116,7 @@
 	         				do{
 	         					//установка доступа для заданного пакета документов
 	         					if((typeof bpm_package != "undefined") && bpm_package){
-	         			 			bpm_package.children[0].setPermission("Contributor", uosw_members.get(i));		//"GROUP_ALFRESCO_ADMINISTRATORS");
+	         			 			bpm_package.children[0].setPermission("Consumer", uosw_members.get(i));		//"GROUP_ALFRESCO_ADMINISTRATORS");
 	         			 		}
 	         			 		if(membersUsers.indexOf(uosw_members.get(i))==-1){
 	         			 			membersUsers.add(uosw_members.get(i));
@@ -130,7 +131,7 @@
 	         			 		logger.log("~~~~~~~~~~~~~~~~~~ /"+i+"/ : " +membersUsers.get(i)+" ~~~~~~~~~~~~~~~~~~  ");
 	         			 		
 	         			 		if((typeof bpm_package != "undefined") && bpm_package){
-	         			 			bpm_package.children[0].setPermission("Coordinator", membersUsers.get(i));		//"GROUP_ALFRESCO_ADMINISTRATORS");
+	         			 			//bpm_package.children[0].setPermission("Coordinator", membersUsers.get(i));		//"GROUP_ALFRESCO_ADMINISTRATORS");
 	         			 		}
 	         			 		
 	         			 		i++;

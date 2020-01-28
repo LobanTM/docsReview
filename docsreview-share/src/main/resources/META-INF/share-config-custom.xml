@@ -57,12 +57,13 @@
          <form>
             <field-visibility>
                <show id="bpm:workflowDescription" />
+                <!-- 
                <show id="bpm:groupAssignees" /> 
                <show id="bpm:assignees" /> 
-               <!-- 
+               -->   
                <show id="uosw:assigneeGroups" />
                <show id="uosw:assigneeUsers" />    
-                -->    
+                
                <show id="wf:requiredApprovePercent" />
                <show id="packageItems" />
                <show id="bpm:sendEMailNotifications" />
@@ -79,13 +80,13 @@
                      <control-param name="style">width: 95%</control-param>
                   </control>
                </field>
-                             
+              <!--                
                <field id="bpm:groupAssignees" label-id="workflow.field.review_groups" set="assignee"> </field>
                <field id="bpm:assignees" label-id="workflow.field.reviewers" set="assignee"> </field> 
-               <!-- 
+                -->
                <field id="uosw:assigneeGroups" label-id="workflow.field.review_groups" set="assignee"> </field>
                <field id="uosw:assigneeUsers" label-id="workflow.field.reviewers" set="assignee"> </field>    
-                -->
+               
                <field id="packageItems" set="items" />
                <field id="bpm:sendEMailNotifications" set="other">
                   <control template="/org/alfresco/components/form/controls/workflow/email-notification.ftl" />

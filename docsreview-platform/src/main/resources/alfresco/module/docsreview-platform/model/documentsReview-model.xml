@@ -31,11 +31,12 @@
                	<associations>
               	</associations>
           		<mandatory-aspects>                    
+                    <!-- 
                      <aspect>bpm:groupAssignees</aspect>
                     <aspect>bpm:assignees</aspect> 
-          		    <!--              
+          		    -->             
                     <aspect>uosw:assignees</aspect>
-                    -->
+                    
                      
                	</mandatory-aspects> 
                	

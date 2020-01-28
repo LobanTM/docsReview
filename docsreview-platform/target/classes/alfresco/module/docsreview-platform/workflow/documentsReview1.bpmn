@@ -89,7 +89,7 @@
 	                       	
 	                       	//получение members для каждой группьі                       		
 	                       	for(var j in membersGroup){
-	                      			//logger.log("----------- "+j+"--->>>> "+membersGroup[j].properties.userName);
+	                      			//logger.log("----------- "+j+"--- "+membersGroup[j].properties.userName);
 	                      		if(membersUsers.indexOf(membersGroup[j].properties.userName)==-1){
 	                            	membersUsers.add(membersGroup[j].properties.userName);
 	                            }
