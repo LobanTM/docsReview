@@ -42,7 +42,7 @@
                	
          </type>
          
-         <!-- <type name="uosw:activitiOKTask">
+          <type name="uosw:activitiOKTask">
             <parent>bpm:activitiOutcomeTask</parent>
             <properties>
                 
@@ -50,7 +50,7 @@
             
         </type>
       
-         
+         <!--
          <type name="uosw:activitiOKTask">
             <parent>bpm:activitiOutcomeTask</parent>
             <properties>

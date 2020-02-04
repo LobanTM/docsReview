@@ -68,6 +68,13 @@ test() {
 }
 
 case "$1" in
+  purge_build_start)
+    down
+    purge
+    build
+    start
+    tail
+    ;;
   build_start)
     down
     build

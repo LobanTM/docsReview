@@ -5,9 +5,7 @@
       <extensionElements>
         <activiti:executionListener event="start" class="org.alfresco.repo.workflow.activiti.listener.ScriptExecutionListener">
           <activiti:field name="script">
-            <activiti:string><![CDATA[
-            
-            			//execution.setVariable('bpm_workflowDescription', "review documents ");
+            <activiti:string><![CDATA[//execution.setVariable('bpm_workflowDescription', "review documents ");
             
             		logger.log("++++++++++++++++++ START: "+"start");
           				if((typeof bpm_workflowDescription == "undefined") || bpm_workflowDescription==""){
@@ -56,15 +54,13 @@
 	                       		i++;
 	                       	}while (i < assigneeGroup.size());		                       	
 	                       	execution.setVariable('uosw_groupName', membersByGroups);
-                       	};
-            
-            ]]></activiti:string>
+                       	};]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
       </extensionElements>
     </startEvent>
     <sequenceFlow id="flow1" sourceRef="startevent1" targetRef="reviewTask">
-    <extensionElements>
+      <extensionElements>
         <activiti:executionListener event="start" class="org.alfresco.repo.workflow.activiti.listener.ScriptExecutionListener">
           <activiti:field name="script">
             <activiti:string><![CDATA[///
@@ -89,10 +85,12 @@
 	         					var groupNode = people.getGroup(uosw_groupName.get(i));
 		                       	logger.log("-------------------- groupNode "+ i +"--- "+groupNode);			
 	         					//установка доступа для заданного пакета документов
-	         					if((typeof bpm_package != "undefined") && bpm_package){
+	         					if((typeof bpm_package != "undefined") && bpm_package!=null){
 	         						logger.log("----------------name group - "+i+" --- "+groupNode.properties["cm:authorityName"]);
 	         					
-	         			 			bpm_package.children[0].setPermission("Consumer", groupNode.properties["cm:authorityName"]);		////"GROUP_ALFRESCO_ADMINISTRATORS");         			 			
+	         						if(bpm_package.children[0]!=null){
+	         			 				bpm_package.children[0].setPermission("Consumer", groupNode.properties["cm:authorityName"]);		////"GROUP_ALFRESCO_ADMINISTRATORS");         			 			
+	         			 			}
 	         			 		}
 	         			 		
 		                       	//получение members для каждой группьі   
@@ -115,8 +113,11 @@
 	         			 	i = 0;
 	         				do{
 	         					//установка доступа для заданного пакета документов
-	         					if((typeof bpm_package != "undefined") && bpm_package){
-	         			 			bpm_package.children[0].setPermission("Consumer", uosw_members.get(i));		//"GROUP_ALFRESCO_ADMINISTRATORS");
+	         					if((typeof bpm_package != "undefined") && bpm_package!=null){
+	         					
+	         						if(bpm_package.children[0]!=null){
+	         			 				bpm_package.children[0].setPermission("Consumer", uosw_members.get(i));		//"GROUP_ALFRESCO_ADMINISTRATORS");
+	         			 			}
 	         			 		}
 	         			 		if(membersUsers.indexOf(uosw_members.get(i))==-1){
 	         			 			membersUsers.add(uosw_members.get(i));
@@ -142,15 +143,13 @@
 	         			 execution.setVariable('uosw_membersUsers', membersUsers);
 	         			 execution.setVariable('uosw_membersCount', membersUsers.size());     //count of all users	
 	         			 execution.setVariable('wf_reviewerCount',membersUsers.size());
-	         			 //logger.log("~~~~~~~~~~~~~~~~~~ wf_reviewerCount / "+wf_reviewerCount+" /  ~~~~~~~~~~~~~~~~~~  ");  
-                     	
-                   ]]></activiti:string>
+	         			 //logger.log("~~~~~~~~~~~~~~~~~~ wf_reviewerCount / "+wf_reviewerCount+" /  ~~~~~~~~~~~~~~~~~~  ");]]></activiti:string>
           </activiti:field>
         </activiti:executionListener>
       </extensionElements>
     </sequenceFlow>
-    <userTask id="reviewTask" name="dr" activiti:assignee="${reviewAssignee}" activiti:formKey="uosw:activitiOKTask">
-    	<extensionElements>
+    <userTask id="reviewTask" name="Document Review" activiti:assignee="${reviewAssignee}" activiti:formKey="uosw:activitiOKTask">
+      <extensionElements>
         <activiti:taskListener event="create" class="org.alfresco.repo.workflow.activiti.tasklistener.ScriptTaskListener">
           <activiti:field name="script">
             <activiti:string><![CDATA[if (typeof bpm_workflowDueDate != 'undefined') task.dueDate = bpm_workflowDueDate
@@ -175,10 +174,9 @@
     </userTask>
     <sequenceFlow id="flow2" sourceRef="reviewTask" targetRef="endevent1"></sequenceFlow>
     <endEvent id="endevent1" name="End"></endEvent>
-    
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_dR">
-    <bpmndi:BPMNPlane bpmnElement="dR" id="BPMNPlane_dR">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_dR2">
+    <bpmndi:BPMNPlane bpmnElement="dR2" id="BPMNPlane_dR2">
       <bpmndi:BPMNShape bpmnElement="startevent1" id="BPMNShape_startevent1">
         <omgdc:Bounds height="35.0" width="35.0" x="70.0" y="180.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>

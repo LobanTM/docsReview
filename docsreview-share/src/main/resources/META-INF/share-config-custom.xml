@@ -52,6 +52,8 @@
 <!--============================================================================
 	 dR2
 	================================================================================-->
+	
+	<!-- START -->
      <config evaluator="string-compare" condition="activiti$dR2">
       <forms>
          <form>
@@ -92,10 +94,86 @@
                   <control template="/org/alfresco/components/form/controls/workflow/email-notification.ftl" />
                </field>
             </appearance>
-         </form>
+         </form>           
       </forms>
    </config>
-
+    <!-- TASK -->
+	<config evaluator="task-type" condition="uosw:activitiOKTask" >   
+      <forms> 
+         <form>
+            <field-visibility>
+               <show id="message" />
+               <show id="taskOwner" />               
+               <show id="bpm:taskId" />
+               <show id="packageItems" />
+               <show id="bpm:comment" />
+               <show id="transitions" />            
+            </field-visibility>
+            <appearance>
+               <set id="" appearance="title" label-id="workflow.set.task.info" />
+               <set id="info" appearance="" template="/org/alfresco/components/form/3-column-set.ftl" />               
+               <set id="items" appearance="title" label-id="workflow.set.items" />
+               <set id="response" appearance="title" label-id="workflow.set.response" />
+               
+               <field id="message" set="info" >
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="taskOwner" set="info" />
+               <field id="bpm:taskId" set="info">
+                  <control template="/org/alfresco/components/form/controls/info.ftl" />
+               </field>
+               <field id="packageItems" set="items" />
+               <field id="bpm:comment" label-id="workflow.field.comment" set="response">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl" />
+               </field>
+               <field id="transitions" set="response" />
+               
+            </appearance>
+            
+         </form> 
+      </forms>
+   </config>
+   <!-- EDIT WORKFLOW -->
+	<config evaluator="task-type" condition="uosw:startParallel" >   
+      <forms>
+         <form id="workflow-details">
+            <field-visibility>
+              <!-- 
+                <show id="bpm:workflowDescription" />
+               -->
+               <show id="packageItems" />
+               <show id="uosw:assigneeGroups" />
+               <show id="uosw:assigneeUsers" />    
+               <show id="transitions" />
+               
+            </field-visibility>
+            <appearance> 
+              <!--             
+               <set id="11111" appearance="title" label-id="workflow.set.general" /> 
+               -->
+               <set id="assignee" appearance="title" label-id="workflow.set.assignees" />  
+               <set id="items" appearance="title" label-id="workflow.set.items" /> 	
+               	
+               <!--               
+               <field id="bpm:workflowDescription" label-id="workflow.field.message">
+                  <control template="/org/alfresco/components/form/controls/textarea.ftl">
+                     <control-param name="style">width: 95%</control-param>
+                  </control>
+               </field>
+                -->
+                <!--
+               <field id="bpm:workflowDescription" label-id="workflow.field.outcome" set="11111"> </field> 
+                -->
+               <field id="uosw:assigneeGroups" label-id="workflow.field.review_groups" set="assignee"> </field>
+               <field id="uosw:assigneeUsers" label-id="workflow.field.reviewers" set="assignee"> </field>    
+               <field id="packageItems" set="items" />               
+                     
+            </appearance>
+         </form>
+ 
+      </forms>
+   </config>
+ 
     <!--================================================================================================================
         Make custom types and aspects visible in "Change Type" and "Manage Aspects" actions.
          This will also make them visible when creating rules.
